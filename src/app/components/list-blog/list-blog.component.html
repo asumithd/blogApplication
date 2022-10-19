@@ -1,0 +1,43 @@
+<app-header></app-header>
+<div class="container">
+    <div class="mt-1">
+
+        <mat-form-field appearance="standard" class="w-100">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Sumith" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort class="w-100">
+                <ng-container matColumnDef="title">
+                    <th class="w-25" mat-header-cell *matHeaderCellDef mat-sort-header> Blog Title </th>
+                    <td class="w-25" mat-cell *matCellDef="let row"> {{row.title}} </td>
+                </ng-container>
+                <ng-container matColumnDef="body">
+                    <th class="w-25" mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+                    <td class="w-25" mat-cell *matCellDef="let row"> {{row.body}} </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th class="w-25" mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <td class="w-25" mat-cell *matCellDef="let row">
+                        <button mat-mini-fab color="primary" (click)="viewBlog(row)">
+                            <mat-icon>remove_red_eye</mat-icon>
+                          </button>
+                        <button mat-mini-fab color="accent" (click)="updateBlog(row)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                        <button mat-mini-fab color="warn" (click)="deleteBlog(row.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="w-25" class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+</div>
